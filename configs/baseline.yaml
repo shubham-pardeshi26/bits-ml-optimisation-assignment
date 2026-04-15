@@ -1,0 +1,34 @@
+model:
+  arch: resnet50
+  num_classes: 10
+
+data:
+  dataset: cifar10
+  data_dir: .    # CIFAR-10 already at ./cifar-10-batches-py/
+  num_workers: 4
+  pin_memory: true
+
+training:
+  epochs: 100
+  batch_size: 128
+  amp: true
+  seed: 42
+  label_smoothing: 0.1
+  optimizer:
+    type: sgd
+    lr: 0.1
+    momentum: 0.9
+    weight_decay: 5.0e-4
+    nesterov: true
+  scheduler:
+    type: cosine
+    warmup_epochs: 5
+
+distributed:
+  enabled: false
+  backend: nccl
+  world_size: 1
+
+logging:
+  log_dir: ./results/baseline
+  checkpoint_dir: ./results/baseline/checkpoints

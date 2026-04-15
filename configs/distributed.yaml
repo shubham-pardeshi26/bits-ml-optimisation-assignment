@@ -1,0 +1,36 @@
+model:
+  arch: resnet50
+  num_classes: 10
+
+data:
+  dataset: cifar10
+  data_dir: .    # CIFAR-10 already at ./cifar-10-batches-py/
+  num_workers: 4
+  pin_memory: true
+
+training:
+  epochs: 100
+  # Linear scaling rule: batch_size = baseline_batch * world_size
+  batch_size: 256
+  amp: true
+  seed: 42
+  label_smoothing: 0.1
+  optimizer:
+    type: sgd
+    # Linear scaling rule: lr = baseline_lr * world_size
+    lr: 0.2
+    momentum: 0.9
+    weight_decay: 5.0e-4
+    nesterov: true
+  scheduler:
+    type: cosine
+    warmup_epochs: 5
+
+distributed:
+  enabled: true
+  backend: nccl
+  world_size: 2
+
+logging:
+  log_dir: ./results/distributed
+  checkpoint_dir: ./results/distributed/checkpoints

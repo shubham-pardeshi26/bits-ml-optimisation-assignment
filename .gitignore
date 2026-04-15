@@ -1,0 +1,15 @@
+CLAUDE.md
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.so
+*.egg
+*.egg-info
+dist/
+build/
+*.log
+cifar10_images/
+cifar-10-python.tar
+*.tar
